@@ -1,57 +1,79 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div class="table__wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Title</th>
+          <th>Release Date</th>
+          <th>Box Office</th>
+          <th>Duration</th>
+          <!--<th>Overview</th> -->
+          <th>Trailer Link</th>
+          <th>Director</th>
+          <th>Phase</th>
+          <th>Saga</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <template v-for="(item, index) in mcu" :key="index" >
+          <tr :class="[{'new': '2021-05-05' < item.release_date}, {'huge': parseInt(item.box_office) > 1000000000 }]"  v-if="item.title != 'Guardians of the Galaxy Vol. 3'">
+            <td><img v-if="item.cover_url" :src="item.cover_url"/></td>
+            <td>{{item.title}}</td>
+            <td>{{item.release_date}}</td>
+            <td>{{numberWithCommas(item.box_office)}}</td>
+            <td>{{item.duration}} minutes</td>
+            <!--<td>{{item.overview}}</td>-->
+            <td><a v-if="item.trailer_url" :href="item.trailer_url" target="_blank">Trailer</a></td>
+            <td>{{item.directed_by}}</td>
+            <td>{{item.phase}}</td>
+            <td>{{item.saga}}</td>
+            <td><a v-if="item.imdb_id" :href="'https://www.imdb.com/title/' + item.imdb_id" target="_blank">IMDB</a></td>
+            </tr>
+        </template>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
+  data: () => ({
+    mcu: {}
+	}),  
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  methods: {
+    numberWithCommas(x) {
+      return '$' + x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  },
+  created() {
+
+     axios({
+        method: 'get',
+        url: 'https://mcuapi.herokuapp.com/api/v1/movies?order=chronology%2CDESC'
+      }
+      ).then(response => {
+
+        this.mcu = response.data.data;
+
+      }).catch(error => {
+          if (error.response ) {
+          }
+      }); 
+      
+
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+ 
 </style>

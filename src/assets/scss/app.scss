@@ -1,0 +1,128 @@
+@import url('https://pro.fontawesome.com/releases/v5.15.2/css/all.css');
+@import "_variables.scss";
+
+
+body {
+    background: lighten($black, 7%); 
+}
+
+a {
+    color: $white; 
+} 
+
+img {
+    height: 100%;
+    width: auto;
+    max-height: 80px;
+}
+
+.table {
+    text-align: left; 
+    border-collapse: collapse;
+    box-shadow: 0 0 50px rgba($black, .75);
+    width: 100%;
+
+    &__wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    thead {
+        background: $black;
+        color: $white;
+        white-space: nowrap;
+        font-size: .75rem;
+        border-radius: 10px;
+
+        th {
+            padding: 10px;
+            border: 0; 
+            text-transform: uppercase; 
+        }
+    }
+    tr {
+        border: 0;
+        border-top: 4px solid $black;
+        &:nth-child(2n) {
+            background: lighten($black, 10%); 
+        }
+        &.huge, &.new {
+            td:first-child {
+                position: relative; 
+                overflow: hidden;
+                &::after {
+                    content: '';
+                    width: 50px;
+                    height: 50px;
+                    top: 0;
+                    left: 0;
+                    position: absolute;
+                    transform: rotate(45deg) scale(1.5) translate(-25px);
+                    z-index: 1; 
+                }
+                &::before {
+                    font-family: $icon-font-family;
+                    position: absolute;
+                    left: 7px;
+                    top: 7px;
+                    z-index: 2; 
+                    color: $black;
+                    font-size: .875rem;
+                    font-weight: 900;
+                }
+            }
+        }
+        &.new {
+            td:first-child {
+                &::after {
+                    background: $color-primary;
+                }
+                &::before {
+                    content: '';
+                }
+            }
+        }
+        &.huge {
+            td:first-child {
+                &::after {
+                    background: $color-secondary;
+                }
+                &::before {
+                    content: '';
+                    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' focusable='false' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 512 512' style='enable-background:new 0 0 512 512;' xml:space='preserve'%3E%3Cpath d='M192,96h128l47.4-71.1c4.9-7.4,2.9-17.3-4.4-22.2c-2.6-1.8-5.7-2.7-8.9-2.7H157.9c-8.8,0-16,7.2-16,16 c0,3.2,0.9,6.3,2.7,8.9L192,96z M320,128H192C-10.4,243.4,0.1,396.6,0.1,416c0,53,49.1,96,109.7,96h292.5c60.6,0,109.7-43,109.7-96 C511.9,397,521.3,242.8,320,128z M273.4,406v17.3c0,4.8-3.9,8.6-8.7,8.6h-17.4c-4.8,0-8.7-3.8-8.7-8.6v-17.5 c-12.3-0.6-24.2-4.9-34.2-12.2c-3.7-2.9-4.4-8.2-1.6-12c0.3-0.4,0.6-0.7,0.9-1l12.8-12.1c3.1-2.8,7.6-3.1,11-0.8c4.2,2.6,9,4,13.9,4 h30.6c7.1,0,12.8-6.4,12.8-14.2c0-6.5-3.9-12.1-9.6-13.7l-49-14.5c-20.2-6-34.4-25.2-34.4-46.7c0-26.4,20.7-47.8,46.5-48.6v-17.5 c0-4.8,3.9-8.6,8.7-8.6h17.4c4.8,0,8.7,3.8,8.7,8.6v17.6c12.3,0.6,24.2,4.9,34.2,12.2c3.7,2.9,4.4,8.2,1.6,12 c-0.3,0.4-0.6,0.7-0.9,1l-12.7,12.2c-3.1,2.8-7.6,3.1-11,0.8c-4.2-2.6-9-4-13.9-4h-30.6c-7.1,0-12.8,6.4-12.8,14.2 c0,6.5,3.9,12.1,9.6,13.7l49,14.5c20.2,6,34.4,25.2,34.4,46.7C319.9,383.9,299.1,405.4,273.4,406L273.4,406z'/%3E%3C/svg%3E%0A");
+                    width: 15px;
+                    height: 15px;
+                    background-repeat: no-repeat;
+                }
+            }
+        }
+    }
+    td {
+        padding: 0 10px;
+        color: $white; 
+        border: 0;
+        font-size: .875rem;
+        line-height: 125%; 
+        &:last-child {
+            a {
+                border: 1px solid $color-primary;
+                padding: 5px 20px;
+                border-radius: 50px;
+                font-weight: bold;
+                text-decoration: none; 
+                background: rgba($color-primary, 0);
+                transition: all .25s ease-in;
+                &::after {
+                    content: '';
+                    margin-left: 10px;
+                    font-family: $icon-font-family;
+                    font-weight: 100;
+                }
+               
+                &:hover {
+                    background: rgba($color-primary, 1);
+                }
+            }
+        }
+    }
+}
